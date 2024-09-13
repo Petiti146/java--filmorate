@@ -79,7 +79,7 @@ public class UserController {
             }
         }
 
-        throw new ValidationException("Поста с таким id не существует");
+        throw new ValidationException("Пользователя с таким id не существует");
     }
 
     private long getNextId() {

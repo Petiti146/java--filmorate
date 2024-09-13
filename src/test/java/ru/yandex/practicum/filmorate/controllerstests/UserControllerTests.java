@@ -44,8 +44,8 @@ public class UserControllerTests {
         User newUser = new User("test@example.com", "testUser", "Test User", LocalDate.of(1990, 1, 1));
         userController.addUser(newUser);
 
-        User updatedUser = new User(newUser.getEmail(), "updatedUser", "Updated User", LocalDate.of(1990, 1, 1));
-        updatedUser.setId(1L);
+        User updatedUser = new User("test2@example.com", "updatedUser", "Updated User", LocalDate.of(1990, 1, 1));
+        updatedUser.setId(0L);
         User updatedUserResult = userController.updateUser(updatedUser);
 
         assertEquals(updatedUser, updatedUserResult);
