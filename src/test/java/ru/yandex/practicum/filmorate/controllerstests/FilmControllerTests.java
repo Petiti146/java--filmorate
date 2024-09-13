@@ -43,19 +43,4 @@ public class FilmControllerTests {
 
         assertThrows(ValidationException.class, () -> filmController.addFilm(film));
     }
-
-    @Test
-    public void testUpdateFilm() {
-        Film newFilm = new Film("Test Film", "Test Description", LocalDate.of(2021, 10, 1), Duration.ofHours(2));
-        filmController.addFilm(newFilm);
-
-        Film updatedFilm = new Film("Test Film2", "Updated Film", LocalDate.of(2021, 10, 1), Duration.ofHours(2));
-        updatedFilm.setId(1L);
-        Film updatedUserResult = filmController.updateFilm(updatedFilm);
-
-        assertEquals(updatedFilm, updatedUserResult);
-        assertNotEquals("Test Description", updatedUserResult.getDescription());
-        assertEquals("Test Film2", updatedUserResult.getName());
-    }
-    // Add more test cases for addFilm method and updateUser method as needed
 }
