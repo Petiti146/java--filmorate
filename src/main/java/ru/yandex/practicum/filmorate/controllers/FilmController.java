@@ -33,7 +33,7 @@ public class FilmController {
         if (newFilm.getName() == null || newFilm.getName().length() > 200) {
             throw new ValidationException("Название фильма не может быть пустым и содержать больше 200 символов");
         }
-        if (newFilm.getReleaseDate().isAfter(LocalDate.of(1895, 12, 28))) {
+        if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
         if (newFilm.getDuration().getSeconds() < 0) {
