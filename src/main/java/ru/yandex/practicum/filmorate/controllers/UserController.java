@@ -82,7 +82,7 @@ public class UserController {
             }
         }
         users.remove(updatedUser.getId());
-        users.put(updatedUser.getId(), updatedUser);
+        addUser(updatedUser);
         return updatedUser;
     }
 

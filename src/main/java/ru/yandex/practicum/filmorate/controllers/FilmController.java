@@ -77,7 +77,7 @@ public class FilmController {
         log.info("Updating film with id: {}", updatedFilm.getId());
 
         films.remove(updatedFilm.getId());
-        films.put(updatedFilm.getId(), updatedFilm);
+        addFilm(updatedFilm);
         return updatedFilm;
     }
 
