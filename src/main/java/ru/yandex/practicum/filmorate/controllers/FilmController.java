@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/films")
 public class FilmController {
     private Map<Long, Film> films = new HashMap<>();
-    private long idCounter = 1;
+    private long idCounter = 0;
 
     @GetMapping
     public Map<Long, Film> getFilms() {
@@ -36,7 +36,7 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (newFilm.getDuration().getSeconds() < 0) {
+        if (newFilm.getDuration().getSeconds() <= 0) {
             throw new ValidationException("Продолжительность не может быть отрицательной");
         }
 

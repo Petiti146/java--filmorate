@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     private final Map<Long, User> users = new HashMap<>();
-    private long idCounter = 1;
+    private long idCounter = 0;
 
     @GetMapping
     public Map<Long, User> getUsers() {
@@ -52,7 +52,9 @@ public class UserController {
                 throw new ValidationException("Этот имейл уже используется");
             }
         }
-
+        if (newUser.getName() == null) {
+            newUser.setName(newUser.getLogin());
+        }
         long id = getNextId();
         newUser.setId(id);
         users.put(id, newUser);
