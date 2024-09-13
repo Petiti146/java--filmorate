@@ -30,8 +30,11 @@ public class FilmController {
 
     @PostMapping
     public Film addFilm(@RequestBody Film newFilm) {
-        if (newFilm.getName() == null || newFilm.getName().length() > 200) {
-            throw new ValidationException("Название фильма не может быть пустым и содержать больше 200 символов");
+        if (newFilm.getName() == null) {
+            throw new ValidationException("Название фильма не может быть пустым");
+        }
+        if (newFilm.getName().length() > 200) {
+            throw new ValidationException("Название фильма не может содержать больше 200 символов");
         }
         if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
@@ -47,10 +50,6 @@ public class FilmController {
             newFilm.setId(id);
             films.put(id, newFilm);
         }
-
-        films.remove(newFilm.getId());
-        films.put(newFilm.getId(), newFilm);
-
         return newFilm;
     }
 
@@ -59,16 +58,27 @@ public class FilmController {
         if (updatedFilm.getId() == null) {
             throw new ValidationException("Id должен быть указан");
         }
+        if (films.get(updatedFilm.getId()) == null) {
+            throw new ValidationException("Фильма с таким id не существует");
+        }
+        if (updatedFilm.getName() == null) {
+            throw new ValidationException("Название фильма не может быть пустым");
+        }
+        if (updatedFilm.getName().length() > 200) {
+            throw new ValidationException("Название фильма не может содержать больше 200 символов");
+        }
+        if (LocalDate.of(1895, 12, 28).isAfter(updatedFilm.getReleaseDate())) {
+            throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
+        }
+        if (updatedFilm.getDuration().getSeconds() <= 0) {
+            throw new ValidationException("Продолжительность не может быть отрицательной");
+        }
 
         log.info("Updating film with id: {}", updatedFilm.getId());
 
-        for (Film film : films.values()) {
-            if (film.getId().equals(updatedFilm.getId())) {
-                return addFilm(updatedFilm);
-            }
-        }
-
-        throw new ValidationException("Фильма с таким id не существует");
+        films.remove(updatedFilm.getId());
+        films.put(updatedFilm.getId(), updatedFilm);
+        return updatedFilm;
     }
 
     private long getNextId() {

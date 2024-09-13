@@ -41,12 +41,6 @@ public class UserController {
 
         log.info("Adding new user: {}", newUser);
 
-        if (users.get(newUser.getId()) != null) {
-            users.remove(newUser.getId());
-            users.put(newUser.getId(), newUser);
-            return newUser;
-        }
-
         for (User user : users.values()) {
             if (user.getEmail().equals(newUser.getEmail())) {
                 throw new ValidationException("Этот имейл уже используется");
@@ -67,6 +61,18 @@ public class UserController {
         if (updatedUser.getId() == null) {
             throw new ValidationException("Id должен быть указан");
         }
+        if (users.get(updatedUser.getId()) == null) {
+            throw new ValidationException("Пользователся с таким в id не существует");
+        }
+        if (updatedUser.getEmail() == null || !updatedUser.getEmail().contains("@")) {
+            throw new ValidationException("Имейл пустой, либо в нем отсутствует знак <@>");
+        }
+        if (updatedUser.getLogin() == null || updatedUser.getLogin().contains(" ")) {
+            throw new ValidationException("Логин не должен быть пустым и не должен содержать пробелы");
+        }
+        if (updatedUser.getBirthday().isAfter(LocalDate.now())) {
+            throw new ValidationException("Ваша дата рождения указана не коректно");
+        }
 
         log.info("Updating user with id: {}", updatedUser.getId());
 
@@ -74,12 +80,10 @@ public class UserController {
             if (!user.getId().equals(updatedUser.getId()) && user.getEmail() != null && user.getEmail().equals(updatedUser.getEmail())) {
                 throw new ValidationException("Этот имейл уже используется");
             }
-            if (user.getId().equals(updatedUser.getId())) {
-                return addUser(updatedUser);
-            }
         }
-
-        throw new ValidationException("Пользователя с таким id не существует");
+        users.remove(updatedUser.getId());
+        users.put(updatedUser.getId(), updatedUser);
+        return updatedUser;
     }
 
     private long getNextId() {
