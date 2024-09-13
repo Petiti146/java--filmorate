@@ -33,7 +33,7 @@ public class FilmController {
         if (newFilm.getName() == null) {
             throw new ValidationException("Название фильма не может быть пустым");
         }
-        if (newFilm.getDescription().length() > 200) {
+        if (newFilm.getName().length() > 200) {
             throw new ValidationException("Название фильма не может содержать больше 200 символов");
         }
         if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
@@ -77,7 +77,7 @@ public class FilmController {
         log.info("Updating film with id: {}", updatedFilm.getId());
 
         films.remove(updatedFilm.getId());
-        films.put(updatedFilm.getId(), updatedFilm);
+        addFilm(updatedFilm);
         return updatedFilm;
     }
 
