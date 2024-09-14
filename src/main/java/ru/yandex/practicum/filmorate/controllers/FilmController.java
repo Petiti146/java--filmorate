@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.models.Film;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -44,8 +43,6 @@ public class FilmController {
         }
 
         log.info("Adding new film: {}", newFilm);
-        Duration duration = Duration.ofSeconds(newFilm.getDuration().toSeconds());
-        newFilm.setDuration(duration);
         long id = getNextId();
         newFilm.setId(id);
         films.put(id, newFilm);
@@ -69,13 +66,11 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(updatedFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (updatedFilm.getDuration().toSeconds() <= 0) {
-            throw new ValidationException("Продолжительность не может быть отрицательной");
+        if (updatedFilm.getDuration() == null || updatedFilm.getDuration().toSeconds() <= 0) {
+            throw new ValidationException("Продолжительность не может быть отрицательнойл или пустой");
         }
 
         log.info("Updating film with id: {}", updatedFilm.getId());
-        Duration duration = Duration.ofSeconds(updatedFilm.getDuration().toSeconds());
-        updatedFilm.setDuration(duration);
         films.remove(updatedFilm.getId());
         films.put(updatedFilm.getId(), updatedFilm);
         return updatedFilm;
