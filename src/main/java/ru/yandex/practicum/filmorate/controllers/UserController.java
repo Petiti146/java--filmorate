@@ -60,7 +60,7 @@ public class UserController {
         if (updatedUser.getId() == null) {
             throw new ValidationException("Id должен быть указан");
         }
-        if (users.get(updatedUser.getId()) == null) {
+        if (!users.containsKey(updatedUser.getId())) {
             throw new ValidationException("Пользователся с таким в id не существует");
         }
         if (updatedUser.getEmail() == null || !updatedUser.getEmail().contains("@")) {
