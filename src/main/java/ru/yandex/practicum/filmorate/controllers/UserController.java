@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     private final Map<Long, User> users = new HashMap<>();
-    private long idCounter = 0;
+    private long idCounter = 1;
 
     @GetMapping
     public Map<Long, User> getUsers() {

@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/films")
 public class FilmController {
     private Map<Long, Film> films = new HashMap<>();
-    private long idCounter = 0;
+    private long idCounter = 1;
 
     @GetMapping
     public Map<Long, Film> getFilms() {
@@ -76,7 +76,6 @@ public class FilmController {
 
 
         log.info("Updating film with id: {}", updatedFilm.getId());
-        updatedFilm.setDuration(updatedFilm.getDuration().plus(films.get(updatedFilm.getId()).getDuration()));
         films.remove(updatedFilm.getId());
         films.put(updatedFilm.getId(), updatedFilm);
         return updatedFilm;
