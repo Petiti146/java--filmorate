@@ -74,8 +74,9 @@ public class FilmController {
             throw new ValidationException("Продолжительность не может быть отрицательной");
         }
 
-        log.info("Updating film with id: {}", updatedFilm.getId());
 
+        log.info("Updating film with id: {}", updatedFilm.getId());
+        updatedFilm.setDuration(updatedFilm.getDuration().plus(films.get(updatedFilm.getId()).getDuration()));
         films.remove(updatedFilm.getId());
         films.put(updatedFilm.getId(), updatedFilm);
         return updatedFilm;
