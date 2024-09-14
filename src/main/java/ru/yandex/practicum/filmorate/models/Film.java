@@ -20,6 +20,6 @@ public class Film {
         this.name = name;
         this.description = description;
         this.releaseDate = releaseDate;
-        this.duration.plusSeconds(duration.toSeconds());
+        this.duration = duration;
     }
 }
