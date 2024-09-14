@@ -7,6 +7,7 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.models.User;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +29,7 @@ public class UserControllerTests {
         User addedUser = userController.addUser(newUser);
 
         assertEquals(newUser, addedUser);
-        Map<Long, User> users = userController.getUsers();
+        List<User> users = userController.getUsers();
         assertEquals(1, users.size());
     }
 
