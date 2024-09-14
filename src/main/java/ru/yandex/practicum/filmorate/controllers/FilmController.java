@@ -53,7 +53,7 @@ public class FilmController {
         if (updatedFilm.getId() == null) {
             throw new ValidationException("Id должен быть указан");
         }
-        if (!films.containsKey(updatedFilm.getId())) {
+        if (films.get(updatedFilm.getId()) == null) {
             throw new ValidationException("Фильма с таким id не существует");
         }
         if (updatedFilm.getName() == null) {
