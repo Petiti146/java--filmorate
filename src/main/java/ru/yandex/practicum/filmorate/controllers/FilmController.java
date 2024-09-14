@@ -29,11 +29,11 @@ public class FilmController {
     }
 
     @PostMapping
-    public void addFilm(@RequestBody Film newFilm) {
-        if (newFilm.getName() == null) {
+    public Film addFilm(@RequestBody Film newFilm) {
+        if (newFilm.getName() == null || newFilm.getName().isBlank()) {
             throw new ValidationException("Название фильма не может быть пустым");
         }
-        if (newFilm.getName().length() > 200) {
+        if (newFilm.getDescription().length() > 200) {
             throw new ValidationException("Название фильма не может содержать больше 200 символов");
         }
         if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
@@ -50,6 +50,7 @@ public class FilmController {
             newFilm.setId(id);
             films.put(id, newFilm);
         }
+        return newFilm;
     }
 
     @PutMapping
@@ -63,7 +64,7 @@ public class FilmController {
         if (updatedFilm.getName() == null) {
             throw new ValidationException("Название фильма не может быть пустым");
         }
-        if (updatedFilm.getDescription().length() > 200) {
+        if (updatedFilm.getDescription()    .length() > 200) {
             throw new ValidationException("Название фильма не может содержать больше 200 символов");
         }
         if (LocalDate.of(1895, 12, 28).isAfter(updatedFilm.getReleaseDate())) {
