@@ -38,7 +38,7 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (newFilm.getDuration().toSeconds() <= 0) {
+        if (newFilm.getDuration() <= 0) {
             throw new ValidationException("Продолжительность не может быть отрицательной");
         }
 
@@ -66,7 +66,7 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(updatedFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (updatedFilm.getDuration() == null || updatedFilm.getDuration().toSeconds() <= 0) {
+        if (updatedFilm.getDuration() <= 0) {
             throw new ValidationException("Продолжительность не может быть отрицательнойл или пустой");
         }
 
