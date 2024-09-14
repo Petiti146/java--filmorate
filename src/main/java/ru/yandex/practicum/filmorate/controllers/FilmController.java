@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.models.Film;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,8 @@ public class FilmController {
         }
 
         log.info("Adding new film: {}", newFilm);
+        Duration duration = Duration.ofSeconds(newFilm.getDuration().toSeconds());
+        newFilm.setDuration(duration);
         long id = getNextId();
         newFilm.setId(id);
         films.put(id, newFilm);
@@ -71,6 +74,8 @@ public class FilmController {
         }
 
         log.info("Updating film with id: {}", updatedFilm.getId());
+        Duration duration = Duration.ofSeconds(updatedFilm.getDuration().toSeconds());
+        updatedFilm.setDuration(duration);
         films.remove(updatedFilm.getId());
         films.put(updatedFilm.getId(), updatedFilm);
         return updatedFilm;
