@@ -23,7 +23,6 @@ public class UserController {
 
     @GetMapping
     public Map<Long, User> getUsers() {
-        log.info("Retrieving list of users");
         return users;
     }
 

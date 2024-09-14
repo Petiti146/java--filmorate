@@ -23,8 +23,6 @@ public class FilmController {
 
     @GetMapping
     public Map<Long, Film> getFilms() {
-        log.info("Retrieving list of films");
-        System.out.println();
         return films;
     }
 
@@ -39,17 +37,14 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (newFilm.getDuration().getSeconds() <= 0) {
+        if (newFilm.getDuration().toMinutes() <= 0) {
             throw new ValidationException("Продолжительность не может быть отрицательной");
         }
 
         log.info("Adding new film: {}", newFilm);
-
-        if (films.get(newFilm.getId()) == null) {
             long id = getNextId();
             newFilm.setId(id);
             films.put(id, newFilm);
-        }
         return newFilm;
     }
 
@@ -70,7 +65,7 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(updatedFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (updatedFilm.getDuration().getSeconds() <= 0) {
+        if (updatedFilm.getDuration().toMinutes() <= 0) {
             throw new ValidationException("Продолжительность не может быть отрицательной");
         }
 
