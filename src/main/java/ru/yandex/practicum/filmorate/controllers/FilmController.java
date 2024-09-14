@@ -29,7 +29,7 @@ public class FilmController {
     }
 
     @PostMapping
-    public Film addFilm(@RequestBody Film newFilm) {
+    public void addFilm(@RequestBody Film newFilm) {
         if (newFilm.getName() == null) {
             throw new ValidationException("Название фильма не может быть пустым");
         }
@@ -50,7 +50,6 @@ public class FilmController {
             newFilm.setId(id);
             films.put(id, newFilm);
         }
-        return newFilm;
     }
 
     @PutMapping
