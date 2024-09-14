@@ -12,6 +12,7 @@ import ru.yandex.practicum.filmorate.models.User;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -22,8 +23,8 @@ public class UserController {
     private long idCounter = 1;
 
     @GetMapping
-    public Map<Long, User> getUsers() {
-        return users;
+    public List<User> getUsers() {
+        return users.values().stream().toList();
     }
 
     @PostMapping
