@@ -38,14 +38,14 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(newFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (newFilm.getDuration().toMinutes() <= 0) {
+        if (newFilm.getDuration().toSeconds() <= 0) {
             throw new ValidationException("Продолжительность не может быть отрицательной");
         }
 
         log.info("Adding new film: {}", newFilm);
-            long id = getNextId();
-            newFilm.setId(id);
-            films.put(id, newFilm);
+        long id = getNextId();
+        newFilm.setId(id);
+        films.put(id, newFilm);
         return newFilm;
     }
 
@@ -66,10 +66,9 @@ public class FilmController {
         if (LocalDate.of(1895, 12, 28).isAfter(updatedFilm.getReleaseDate())) {
             throw new ValidationException("Дата релиза фильма не может быть раньше 1895 года");
         }
-        if (updatedFilm.getDuration().toMinutes() <= 0) {
+        if (updatedFilm.getDuration().toSeconds() <= 0) {
             throw new ValidationException("Продолжительность не может быть отрицательной");
         }
-
 
         log.info("Updating film with id: {}", updatedFilm.getId());
         films.remove(updatedFilm.getId());
